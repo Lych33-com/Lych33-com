@@ -3,7 +3,6 @@ module for authentication models
 """
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.utils.translation import ugettext_lazy
 from .managers import CustomUserManager
 
 
@@ -15,7 +14,7 @@ class User(AbstractUser):
     username = None
     first_name = None
     last_name = None
-    email = models.EmailField(ugettext_lazy('email address'), unique=True)
+    email = models.EmailField('email address', unique=True)
     phone = models.CharField(max_length=3086, blank=True)
     name = models.CharField(max_length=255, blank=True)
     profile_picture = models.ImageField(upload_to="profile_pictures/", blank=True)

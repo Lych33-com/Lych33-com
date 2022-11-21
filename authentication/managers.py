@@ -3,7 +3,6 @@ module to hold custom model managers
 """
 
 from django.contrib.auth.models import BaseUserManager
-from django.utils.translation import ugettext_lazy
 
 
 class CustomUserManager(BaseUserManager):
@@ -15,7 +14,7 @@ class CustomUserManager(BaseUserManager):
         creates and saves a user with given email and password
         """
         if not email:
-            raise ValueError(ugettext_lazy("Email is required"))
+            raise ValueError("Email is required")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
