@@ -1,0 +1,65 @@
+body{
+    background: #f2f2f2;
+}
+.stories-holder{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+
+}
+
+.story{
+     border: 0;
+     
+}
+
+.story-image{
+    width: 100%;
+    height: auto;
+}
+
+.navbar-logo{
+    width: 130px;
+    height: auto;
+}
+
+.story-title{
+    font-weight: 500;
+    font-size:  2.4rem;
+    margin-bottom: 0.5rem;
+    font-family: "librebaskerville-bold", serif;
+}
+
+.story-content, .story-author{
+    font-size: 17px;
+    font-family: "metropolis-regular", sans-serif;
+    color: #656565;
+    line-height: 1.8;
+}
+
+#submit-post-btn{
+    background: #212529;
+    color: #fff;
+    width: 170px;
+    height: 50px;
+    margin-left: auto;
+    font-size: 18px;
+}
+/* responsiveness */
+
+
+@media screen and (max-width:1020px) {
+    .stories-holder{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+}
+
+@media screen and (max-width:620px) {
+    .stories-holder{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+}

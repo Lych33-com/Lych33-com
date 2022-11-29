@@ -17,7 +17,7 @@ urlpatterns = [
          name='password_reset'),
     path('', include("django.contrib.auth.urls")),
     path('register/', views.register, name="register"),
-    path('<int:pk>/', login_required(views.ProfileView.as_view()), name="profile"),
+    path('<int:pk>/', views.dashboard, name="dashboard"),
     path('edit-email/', views.edit_email_view, name="edit_email"),
     path("edit-phone/", views.edit_phone_view, name="edit_phone"),
     path("edit-name/", views.edit_name_view, name="edit_name"),

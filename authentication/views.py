@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm
 from .models import User
 from .forms import EditEmailForm, EditPhoneNumberForm, EditName
+from stories.models import Story
 
 
 @login_required
@@ -16,7 +17,7 @@ def login_redirect(request):
     """
     function to redirect user after login
     """
-    return redirect(reverse("profile", args=(request.user.id,)))
+    return redirect(reverse("dashboard", args=(request.user.id,)))
 
 
 def register(request):
@@ -31,7 +32,7 @@ def register(request):
             password = form.cleaned_data['password1']
             user = authenticate(email=email, password=password)
             login(request, user)
-            return redirect(reverse('profile', args=(user.id,)))
+            return redirect(reverse('dashboard', args=(user.id,)))
     else:
         form = RegistrationForm()
 
@@ -41,14 +42,10 @@ def register(request):
 
 
 
-class ProfileView(generic.DetailView):
-    """
-    profile view
-    """
-    model = User
-    template_name = "registration/profile.html"
-    context_object_name = "user"
-
+@login_required()
+def dashboard(request, pk):
+    stories = Story.objects.filter(user=request.user).order_by("-id")
+    return render(request, "registration/dashboard.html", {"stories":stories})
 
 @login_required()
 def edit_email_view(request):

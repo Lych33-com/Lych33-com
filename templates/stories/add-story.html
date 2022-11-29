@@ -1,0 +1,65 @@
+{% extends 'base.html' %} 
+{% block title %}<title>Home</title> {% endblock %}
+{% block content %}
+{% load widget_tweaks %}
+
+
+<div class="container mt-4">
+    <h1 class="text-center display-4">
+        Share Your Stories With Us
+    </h1>
+
+    <p class="lead mt-3" style="text-align: justify;">Remember when you were a kid and narrted an event or a moment without hesitating? We’ll get you back there. And if that was never you, now it can be.</p>
+   
+    <h3 class="mt-5">Please be kind and respectful while uploading a post</h3>
+    
+    <form method="POST" class="mb-5 mt-5" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group text-start">
+            <label class="form-label" for="{{form.title.id_for_label}}"
+              >{{form.title.label}}<span class="text-danger">*</span></label
+            >
+            {{form.title|add_class:'form-control input'|attr:"placeholder:My Trip to Barcelona"|attr:"required:true"}}
+            <div class="error-list" id="title-error"></div>
+        </div>
+
+
+        <div class="mb-3 mt-3">
+            <label for="formFile" class="form-label">Photo</label>
+            <input class="form-control" type="file" id="image-input" name="image" accept="image/*">
+         
+          </div>
+
+        
+        <div class="form-group text-start">
+            <label class="form-label" for="{{form.story.id_for_label}}"
+              >{{form.story.label}}</label
+            >
+            {{form.story|add_class:'form-control'|attr:"placeholder:Type your story here"}}
+            <div class="error-list" id="story-error"></div>
+        </div>
+
+        
+        <div class="form-check mt-3">
+          {{form.anonymus|add_class:'form-check-input'}}
+          <label class="form-check-label" for="anonymous-check">
+            Stay Anonymous
+          </label>
+        </div>
+
+        <div class="form-group mt-3">
+            <button
+              type="submit"
+              id="submit-post-btn"
+              class="form-control"
+            >
+              Post
+            </button>
+          </div>
+    </form>
+</div>
+
+{% endblock %}
+{% block additional_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+{% endblock %}
