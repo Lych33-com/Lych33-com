@@ -12,8 +12,11 @@ class Story(models.Model):
     image = models.ImageField(upload_to="stories",blank=True, null=True)
     title = models.CharField(max_length=255)
     anonymus = models.BooleanField(default=False)
+   
     class Meta:
         verbose_name_plural = "Stories"
+
+    
     
     @property
     def get_photo_url(self):

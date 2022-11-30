@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from .forms import AddPostForm
 from .models import Story
-
-
+from likes.models import Like
+from django.http import JsonResponse
 def home(request):
     stories = Story.objects.all().order_by("-id")
 
@@ -31,3 +31,20 @@ def add_story(request):
         form = AddPostForm()
 
     return render(request, "stories/add-story.html", {"form":form})
+
+
+@login_required
+def like_story(request, pk):
+    story = Story.objects.get(id=pk)
+    like = Like.objects.filter(story=story, user=request.user).first()
+
+    if not like:
+        like = Like.objects.create(story=story, user=request.user)
+
+    # check if like is in list of likes for post
+    if like in story.likes.all():
+        story.likes.remove(like)
+    else:
+        story.likes.add(like)
+    
+    return JsonResponse({"likes":story.likes.all().count()})

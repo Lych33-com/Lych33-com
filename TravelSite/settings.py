@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     "adverts",
     "stories",
     "comments",
-    "likes"
+    "likes",
+    "django_social_share"
 ]
 
 MIDDLEWARE = [
