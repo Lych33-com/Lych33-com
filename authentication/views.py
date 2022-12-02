@@ -10,7 +10,7 @@ from .forms import RegistrationForm
 from .models import User
 from .forms import EditEmailForm, EditPhoneNumberForm, EditName
 from stories.models import Story
-
+from adverts.models import Advert
 
 @login_required
 def login_redirect(request):
@@ -45,7 +45,8 @@ def register(request):
 @login_required()
 def dashboard(request, pk):
     stories = Story.objects.filter(user=request.user).order_by("-id")
-    return render(request, "registration/dashboard.html", {"stories":stories})
+    ads= Advert.objects.all().order_by("-id")
+    return render(request, "registration/dashboard.html", {"stories":stories, "ads":ads})
 
 @login_required()
 def edit_email_view(request):

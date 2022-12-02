@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from .forms import AddPostForm
-from .models import Story
+from .models import Story, Report
 from likes.models import Like
 from django.http import JsonResponse
+from adverts.models import Advert
+
+
 def home(request):
     stories = Story.objects.all().order_by("-id")
+    ads= Advert.objects.all().order_by("-id")
 
-    return render(request, "index.html", {"stories":stories})
+    return render(request, "index.html", {"stories":stories, "ads":ads})
 
 @login_required
 def add_story(request):
@@ -48,3 +52,12 @@ def like_story(request, pk):
         story.likes.add(like)
     
     return JsonResponse({"likes":story.likes.all().count()})
+
+
+@login_required
+def report_story(request,pk):
+    story = Story.objects.get(pk=pk)
+
+    Report.objects.create(story=story, reporter=request.user)
+
+    return JsonResponse("success", safe=False)

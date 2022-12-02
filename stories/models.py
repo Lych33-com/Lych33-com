@@ -15,6 +15,9 @@ class Story(models.Model):
    
     class Meta:
         verbose_name_plural = "Stories"
+    
+    def __str__(self):
+        return self.title
 
     
     
@@ -24,3 +27,12 @@ class Story(models.Model):
             return self.image.url
         else:
             return ""
+    
+
+class Report(models.Model):
+    story= models.ForeignKey(Story, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
+    reporter = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.reporter.name} reported story {self.story.title}"

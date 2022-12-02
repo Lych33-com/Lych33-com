@@ -4,9 +4,16 @@
 {% load liked_filter %}
 {% load social_share %}
 <div class="container mt-4 mb-4">
+  {% include 'includes/ad.html' with ad=ads.0 %}
     <div class="stories-holder">
         {% for story in stories %}
         <div class="story card shadow-sm d-flex justify-content-between">
+          <div class="dropdown story-actions"> 
+              <i class="fas fa-ellipsis-v" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item report-story" data-story-id="{{story.id}}">Report</a></li>
+            </ul>
+          </div>
             <div>
             <div class="image-holder">
                 <img src="{{story.get_photo_url}}" class="story-image"/>
@@ -42,7 +49,7 @@
         {% endfor %}
 
     </div>
-
+    {% include 'includes/ad.html' with ad=ads.1 %}
 </div>
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -62,6 +69,18 @@
     </div>
   </div>
 
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast hide bg-success text-light" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto">Lych33</strong>
+     
+        <button type="button" id="dismiss-toast" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        Story has been reported successfully!
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block additional_js %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -123,6 +142,30 @@ $(".share-btn").click(function(){
     {% post_to_whatsapp "https://travel-site.onrender.com/" "<button class='share-btn btn'>Share to Whatsapp</button>" %}
     {% send_email "https://travel-site.onrender.com/" "<button class='share-btn btn'>Share to email!</button>" %}
    `)
+})
+
+// reporting stroy
+
+$(".report-story").each(function(){
+  $(this).click(function(){
+    $.ajax({
+            url: "/report-story/"+ $(this).attr("data-story-id")+"/",
+            type:"GET",
+                beforeSend: function(xhr, settings) {
+              
+
+            }
+        }).done(function (data) {
+          $("#liveToast").removeClass("hide").addClass("show")
+
+        }).fail(function(error){
+        })
+ 
+  })
+})
+
+$("#dismiss-toast").click(function(){
+  $("#liveToast").removeClass("show").addClass("hide")
 })
 </script>
 {% endblock %}

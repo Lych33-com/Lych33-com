@@ -11,7 +11,22 @@ body{
 
 .story{
      border: 0;
+     position: relative;
      
+}
+.story-actions{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    background: rgba(0,0,0 ,0.6);
+    padding: 8px 5px;
+    color: #fff;
+    font-size: 18px;
+}
+
+.dropdown{
+    cursor: pointer;
 }
 
 .story-image{
@@ -100,6 +115,39 @@ body{
 
 .mail-this a:hover{
     color: #fff;
+}
+
+
+/* ads  */
+
+.ad-holder{
+    width: 100%;
+    height: 150px;
+    background: red;
+    margin-bottom: 1rem;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin-top: 1rem;
+}
+.ad-title{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0,0,0 ,0.6);
+    height: 40px;
+    color: #fff;
+    box-sizing: border-box;
+    display: flex; 
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    justify-content: space-between;
+    font-size: 18px;
+   
+    font-weight: bold;
 }
 /* responsiveness */
 
