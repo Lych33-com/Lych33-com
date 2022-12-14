@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'sl8&gvkj&9%4ktksr!gi=xz!z0@*-g248mbp9o)+yya8(ihtiz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "lych33.com", "www.lych33.com"]
 
@@ -68,15 +68,15 @@ WSGI_APPLICATION = 'TravelSite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-else:
-    DATABASES = {
+# if DEBUG:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         }
+#     }
+# else:
+DATABASES = {
     'default': dj_database_url.config(
         default='postgres://admin:JJ5PAKM8vOtImuYvIRxuCzQM5gybkpHi@dpg-ced0sb6n6mpgskihog00-a/lych33',
         conn_max_age=600,
