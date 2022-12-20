@@ -36,3 +36,4 @@ class Report(models.Model):
 
     def __str__(self):
         return f"{self.reporter.name} reported story {self.story.title}"
+

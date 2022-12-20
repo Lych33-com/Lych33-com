@@ -34,6 +34,14 @@ body{
     height: auto;
 }
 
+.comment-header{
+    max-width: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  
 .navbar-logo{
     width: 130px;
     height: auto;

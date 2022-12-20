@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from .forms import AddPostForm
 from .models import Story, Report
+from comments.models import Comment
 from likes.models import Like
 from django.http import JsonResponse
 from adverts.models import Advert
+from django.http import Http404
 
 
 def home(request):
@@ -61,3 +63,36 @@ def report_story(request,pk):
     Report.objects.create(story=story, reporter=request.user)
 
     return JsonResponse("success", safe=False)
+
+
+@login_required
+def story_detail(request,pk):
+    story = Story.objects.get(pk=pk)
+
+    return render(request, "stories/story-detail.html", {"story":story})
+
+
+@login_required
+def add_comment(request,pk):
+    try:
+        story = Story.objects.get(id=pk)
+        Comment.objects.create(comment=request.POST.get("comment"), user=request.user, story=story)
+
+        return redirect('story_detail', pk=story.id)
+
+    except Story.DoesNotExist:
+        raise Http404
+
+
+@login_required
+def delete_comment(request,pk):
+    try:
+        comment = Comment.objects.get(id=pk)
+        story_id = comment.story.id
+
+        comment.delete()
+
+        return redirect('story_detail', pk=story_id)
+
+    except Comment.DoesNotExist:
+        raise Http404
