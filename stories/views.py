@@ -24,7 +24,6 @@ def add_story(request):
             post = form.save(commit=False)
             post.user = request.user
             anonymus =  request.POST.get("anonymus", False)
-            print("wjat", anonymus)
             if anonymus:
                 print("anon", anonymus)
                 post.anonymus = True
