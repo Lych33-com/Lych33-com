@@ -16,7 +16,33 @@
           </div>
             <div>
             <div class="image-holder">
-                <img src="{{story.get_photo_url}}" class="story-image"/>
+              <div id="story-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="{{story.get_photo_url}}" class="story-image"/> 
+                  </div>
+                 
+                  {% if story.video %}
+                  <div class="carousel-item">
+                    <video class="story-video" autoplay="autoplay" controls="controls" preload="preload">
+                      <source src="{{story.get_video_url}}.mp4" type="video/mp4"></source>
+                    </video>
+                  </div>
+                  {% endif %}
+                </div>
+                {% if story.video %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#story-carousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#story-carousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+                {% endif %}
+              </div>
+             
+              
             </div>
             <div class="story-body p-2 ps-3 pe-3">
                 <div class="story-title">{{story.title}}</div>

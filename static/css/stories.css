@@ -2,16 +2,16 @@ body{
     background: #f2f2f2;
   
 }
-.stories-holder{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-
+.text-dark{
+    color: #000!important;
 }
 
 .story{
      border: 0;
      position: relative;
+     border-bottom: 1px solid #ddd;
+     padding-bottom: 1rem;
+     padding-top: 1rem;
      
 }
 .story-actions{
@@ -19,12 +19,21 @@ body{
     top: 0;
     right: 0;
     z-index: 10;
-    background: rgba(0,0,0 ,0.6);
+    /* background: rgba(0,0,0 ,0.6); */
     padding: 8px 5px;
-    color: #fff;
+    color: #000;
     font-size: 18px;
 }
 
+.story-footer{
+    max-width: 500px;
+    width: 100%;
+
+}
+
+.story-footer i:hover{
+    opacity: 0.6;
+}
 .dropdown{
     cursor: pointer;
 }
@@ -32,6 +41,15 @@ body{
 .story-image{
     width: 100%;
     height: auto;
+    max-width: 100%;
+}
+.image-holder{
+    max-width: 100%;
+}
+.story-video{
+    width: 100%;
+    height: auto;
+    max-width: 100%;
 }
 
 .comment-header{
@@ -53,6 +71,12 @@ body{
     margin-bottom: 0.5rem;
     font-family: "librebaskerville-bold", serif;
 }
+
+.story-content-header{
+    width: 100%;
+    max-width: 500px;
+}
+
 
 .story-content, .story-author{
     font-size: 17px;
@@ -157,21 +181,36 @@ body{
    
     font-weight: bold;
 }
+
+
+.story-uploader img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.story-uploader-name{
+    text-decoration: none;
+    color: #000;
+}
+.story-uploader-name:hover{
+    color: #333;
+}
+
+.story-carousel-list{
+    width: 100%;
+}
+
+.carousel-item{
+    max-height: 800px;
+    width: 100%;
+}
+
+.carousel-item *{
+    width: auto;
+    height: 500px;
+    border-radius: 15px;
+    
+}
 /* responsiveness */
 
 
-@media screen and (max-width:1020px) {
-    .stories-holder{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-
-    }
-}
-
-@media screen and (max-width:620px) {
-    .stories-holder{
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-
-    }
-}

@@ -5,55 +5,81 @@
 {% load social_share %}
 <div class="container mt-4 mb-4">
   {% include 'includes/ad.html' with ad=ads.0 %}
-    <div class="stories-holder">
-        {% for story in stories %}
-        <div class="story card shadow-sm d-flex justify-content-between">
-
+    <div class="stories-holder flex-column">
+      {% for story in stories %}
+      <div class="story d-flex">
+       <div class="story-uploader me-3">
+        <img src="{{story.user.get_photo_url}}"/>
+       </div>
+       <div class="story-content d-flex flex-column">
+        <div class="d-flex justify-content-between story-content-header">
+          <div>
+          <a href="{% url 'dashboard' story.user.id %}" class="story-uploader-name">@{{story.user.name}}</a>.
+          <span class="text-primary" role="button">Follow</span>
+        </div>
           <div class="dropdown story-actions"> 
-              <i class="fas fa-ellipsis-v" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"></i>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item report-story" data-story-id="{{story.id}}">Report</a></li>
-            </ul>
-          </div>
-            <div>
-            <div class="image-holder">
-              <a href="{% url 'story_detail' story.id %}"><img src="{{story.get_photo_url}}" class="story-image"/></a>
-            </div>
-            <a style="
-              color: inherit;
-              text-decoration: inherit; 
-            " href="{% url 'story_detail' story.id %}">
-            <div class="story-body p-2 ps-3 pe-3">
-                <div class="story-title">{{story.title}}</div>
-                <div class="story-content">{{story.story}}</div>
-            </div>
-          </a>
-            <div class="story-author text-center p-2 mt-3 mb-3">~ 
-            {% if story.anonymus %}
-            Anonymous
-            {% else %}
-            {{story.user.name}}
-            {% endif %}
-            </div>
+            <i class="fas fa-ellipsis-h" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"></i>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item report-story" data-story-id="{{story.id}}">Report</a></li>
+          </ul>
         </div>
-            <div class="story-footer p-3">
-         
-                <div class="likes">
-                    <i class="fas fa-thumbs-up"></i> 
-                    <span id="likes-{{story.id}}" class="ms-1">{{story.likes.all.count}}</span>
+        </div>
+        <div>
+          {{story.story}}
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+          <div class="image-holder">
+            <div id="story-carousel-{{story.id}}" class="carousel story-carousel-list slide" data-bs-ride="carousel" data-bs-interval="false">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="{{story.get_photo_url}}" class="story-image"/> 
                 </div>
-            <hr/>
-            <div class="d-flex justify-content-between align-items-center">
-                <i class="fas fa-thumbs-up fa-lg like-btn  {% if story.likes.all|liked:request.user %} active {% endif %}" role="button" data-like-id="{{story.id}}"></i>
-         
-            <button data-story-id="{{story.id}}" type="button" class="btn btn-primary share-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="fas fa-share me-2"></i>Share
+               
+                {% if story.video %}
+                <div class="carousel-item">
+                  <video class="story-video" autoplay="false" controls="controls" preload="preload">
+                    <source src="{{story.get_video_url}}.mp4" type="video/mp4"></source>
+                  </video>
+                </div>
+                {% endif %}
+              </div>
+              {% if story.video %}
+              <button class="carousel-control-prev" type="button" data-bs-target="#story-carousel-{{story.id}}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
               </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#story-carousel-{{story.id}}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+              {% endif %}
             </div>
             </div>
-           
+
+
         </div>
-        {% endfor %}
+        <div class="d-flex justify-content-start">
+        <div class="d-flex mt-4 story-footer justify-content-between">
+          <div class="d-flex justify-content-center align-items-center">
+            <i class="fas fa-heart fa-lg like-btn  {% if story.likes.all|liked:request.user %} active {% endif %}" role="button" data-like-id="{{story.id}}"></i>
+             <span class="ms-2" id="likes-{{story.id}}">{{story.likes.all.count}}</span>
+          </div>
+          <div class="d-flex justify-content-center align-items-center">
+            <a href="{% url 'story_detail' story.id %}" class="p-0 g-0 m-0 text-reset"><i class="fas fa-comment fa-lg" role="button"></i></a>
+            <span  class="ms-2" >{{story.comments.all.count}}</span>
+          </div>
+          <div class="share">
+            <span data-story-id="{{story.id}}" type="button" class="share-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <i class="fas fa-share me-2"></i>
+            </span>
+          </div>
+        </div>
+        </div>
+       </div>
+    </div>
+   
+    {% endfor %}
+
 
     </div>
     {% include 'includes/ad.html' with ad=ads.1 %}

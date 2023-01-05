@@ -24,5 +24,13 @@ class User(AbstractUser):
 
     objects = CustomUserManager()
 
+    @property
+    def get_photo_url(self):
+        if self.profile_picture and hasattr(self.profile_picture, 'url'):
+            return self.profile_picture.url
+        else:
+            return "/static/images/default_user.png"
+
+
     def __str__(self):
         return self.email

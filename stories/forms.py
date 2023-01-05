@@ -5,4 +5,4 @@ class AddPostForm(forms.ModelForm):
 
     class Meta:
         model = Story
-        fields = ("title","image", "story", "anonymus")
+        fields = ("title","image","video", "story", "anonymus")

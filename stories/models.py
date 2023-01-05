@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from .validators import validate_file_extension
+from cloudinary_storage.storage import VideoMediaCloudinaryStorage
 User = get_user_model()
 
 
@@ -12,7 +13,8 @@ class Story(models.Model):
     image = models.ImageField(upload_to="stories",blank=True, null=True)
     title = models.CharField(max_length=255)
     anonymus = models.BooleanField(default=False)
-   
+    video = models.FileField(upload_to="videos", validators=[validate_file_extension], blank=True, null=True, storage=VideoMediaCloudinaryStorage)
+    
     class Meta:
         verbose_name_plural = "Stories"
     
@@ -27,7 +29,13 @@ class Story(models.Model):
             return self.image.url
         else:
             return ""
-    
+
+    @property
+    def get_video_url(self):
+        if self.video and hasattr(self.video, 'url'):
+            return self.video.url
+        else:
+            return ""    
 
 class Report(models.Model):
     story= models.ForeignKey(Story, on_delete=models.CASCADE)
