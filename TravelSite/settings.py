@@ -78,19 +78,19 @@ WSGI_APPLICATION = 'TravelSite.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 # if DEBUG:
-# DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#         }
-#     }
-# else:
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://admin:JJ5PAKM8vOtImuYvIRxuCzQM5gybkpHi@dpg-ced0sb6n6mpgskihog00-a/lych33',
-        conn_max_age=600,
-    )
-}
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+# else:
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgres://admin:JJ5PAKM8vOtImuYvIRxuCzQM5gybkpHi@dpg-ced0sb6n6mpgskihog00-a/lych33',
+#         conn_max_age=600,
+#     )
+# }
 
 
 # Password validation
