@@ -6,7 +6,6 @@ from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
 
 
-
 class User(AbstractUser):
     """
     custom user model
@@ -18,7 +17,7 @@ class User(AbstractUser):
     phone = models.CharField(max_length=3086, blank=True)
     name = models.CharField(max_length=255, blank=True)
     profile_picture = models.ImageField(upload_to="profile_pictures/", blank=True)
-
+    followers = models.ManyToManyField('self', blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

@@ -15,14 +15,24 @@
         <div class="d-flex justify-content-between story-content-header">
           <div>
           <a href="{% url 'dashboard' story.user.id %}" class="story-uploader-name">@{{story.user.name}}</a>.
-          <span class="text-primary" role="button">Follow</span>
+         {% if request.user.is_authenticated and request.user != story.user %}
+          <span class="text-primary follow-btn" role="button" data-follow-id="{{story.user.id}}">
+            {% if request.user in story.user.followers.all %}
+            Unfollow
+            {% else %}
+            Follow
+            {% endif%}
+          </span>
+          {% endif %}
         </div>
+        {% if request.user.is_authenticated %}
           <div class="dropdown story-actions"> 
             <i class="fas fa-ellipsis-h" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"></i>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <li><a class="dropdown-item report-story" data-story-id="{{story.id}}">Report</a></li>
           </ul>
         </div>
+        {% endif %}
         </div>
         <div>
           {{story.story}}
@@ -59,6 +69,7 @@
 
         </div>
         <div class="d-flex justify-content-start">
+          {% if request.user.is_authenticated %}
         <div class="d-flex mt-4 story-footer justify-content-between">
           <div class="d-flex justify-content-center align-items-center">
             <i class="fas fa-heart fa-lg like-btn  {% if story.likes.all|liked:request.user %} active {% endif %}" role="button" data-like-id="{{story.id}}"></i>
@@ -74,6 +85,7 @@
             </span>
           </div>
         </div>
+        {% endif %}
         </div>
        </div>
     </div>
@@ -163,6 +175,32 @@ $(".like-btn").click(function(){
          console.log(error)
         })
 })
+
+// follow buttons
+$(".follow-btn").click(function(){
+    const user_id = $(this).attr("data-follow-id");
+    if($.trim($(this).text())==="Follow"){
+      $(this).text("Unfollow")
+    }else{
+      $(this).text("Follow") 
+    }
+
+    const csrftoken = getCookie("csrftoken");
+    // send like request
+    $.ajax({
+        url: "/follow-user/"+ user_id +"/",
+        type:"POST",
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken",csrftoken);
+
+            }
+        }).done(function (data) {
+
+        }).fail(function(error){
+         console.log(error)
+        })
+})
+
 // share buttons
 
 $(".share-btn").click(function(){

@@ -7,7 +7,7 @@ from likes.models import Like
 from django.http import JsonResponse
 from adverts.models import Advert
 from django.http import Http404
-
+from authentication.models import User
 
 def home(request):
     stories = Story.objects.all().order_by("-id")
@@ -95,3 +95,14 @@ def delete_comment(request,pk):
 
     except Comment.DoesNotExist:
         raise Http404
+
+@login_required
+def follow_user(request, pk):
+    user_to_follow = User.objects.get(id=pk)
+
+    if request.user in user_to_follow.followers.all():
+        user_to_follow.followers.remove(request.user)
+    else:
+        user_to_follow.followers.add(request.user)
+    
+    return JsonResponse({"status":"success"})
